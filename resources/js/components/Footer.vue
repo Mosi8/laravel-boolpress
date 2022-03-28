@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
-        Footer
-    </div>
+    <footer class="container text-center">
+        Designed with love
+    </footer>
 </template>
 
 <script>

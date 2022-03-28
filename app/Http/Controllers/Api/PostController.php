@@ -14,7 +14,16 @@ class PostController extends Controller
         //     "surname" => "Mosiello"
         // ]);
 
-        $posts = Post::all();
+        // $posts = Post::all();
+        $posts = Post::with(["category","tags"])->get();
+
         return response()->json($posts);
+    }
+
+    public function show($slug){
+
+        $post = Post::where("slug", $slug)->with(["category","tags"])->first();
+        
+        return response()->json($post);
     }
 }
