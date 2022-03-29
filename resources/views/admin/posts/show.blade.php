@@ -14,6 +14,41 @@
       @method("DELETE")
       <button type="submit" class="btn btn-danger" onclick="return confirm('Sei sicuro?')"><i class="fa-solid fa-trash-can"></i></button>
   </form>
+
+  @if (count($post->comments) >0)
+  <div>
+    <h3>Commenti</h3>
+    <table class="table">
+      <tbody>
+        @foreach ($post->comments as $comment)
+        <tr>
+          <td>{{$comment->content}}</td>
+          <td>
+            @if (!$comment->approved)
+              <form action="{{route('admin.comments.update', $comment->id)}}" method="POST">
+                @csrf
+                @method("PATCH")
+                <button type="submit" class="btn btn-success">Approva</button>
+              </form>
+            @else
+                Approvato
+            @endif
+          </td> 
+          <td>
+            <form action="{{route('admin.comments.destroy', $comment->id)}}" method="POST">
+              @csrf
+              @method("DELETE")
+              <button type="submit" class="btn btn-danger">Elimina</button>
+            </form>
+          </td> 
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+      
+  @endif
+
   <a href="{{route('admin.posts.index')}}"><button type="button" class="btn btn-dark">Back</button></a>
 </div>
 @endsection
